@@ -253,6 +253,7 @@ def create_override_settings_dropdown(tabname, row):
 def create_ui():
     import modules.img2img
     import modules.txt2img
+    import modules.ui_img2img_tool
 
     reload_javascript()
 
@@ -1112,9 +1113,12 @@ def create_ui():
 
     settings.create_ui(loadsave, dummy_component)
 
+    img2img_tool_interface = modules.ui_img2img_tool.create_ui()
+
     interfaces = [
         (txt2img_interface, "txt2img", "txt2img"),
         (img2img_interface, "img2img", "img2img"),
+        (img2img_tool_interface, "Image to Image Tool", "img2img_tool"),
         (extras_interface, "Extras", "extras"),
         (pnginfo_interface, "PNG Info", "pnginfo"),
         (modelmerger_ui.blocks, "Checkpoint Merger", "modelmerger"),
