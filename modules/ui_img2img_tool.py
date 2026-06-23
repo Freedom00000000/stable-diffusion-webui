@@ -15,6 +15,7 @@ RESIZE_MODES = ["Just resize", "Crop and resize", "Resize and fill", "Just resiz
 
 
 def run_img2img_tool(
+    id_task,
     image,
     prompt,
     negative_prompt,
@@ -65,6 +66,8 @@ def run_img2img_tool(
 
 def create_ui():
     with gr.Blocks(analytics_enabled=False) as img2img_tool_interface:
+        dummy_component = gr.Label(visible=False)
+
         with ResizeHandleRow(equal_height=False):
             with gr.Column(variant="compact", elem_id="img2img_tool_settings"):
                 gr.HTML(
@@ -191,6 +194,7 @@ def create_ui():
         generate_btn.click(
             fn=wrap_gradio_gpu_call(run_img2img_tool, extra_outputs=[None, "", ""]),
             inputs=[
+                dummy_component,
                 input_image,
                 prompt,
                 negative_prompt,
@@ -209,6 +213,7 @@ def create_ui():
         prompt.submit(
             fn=wrap_gradio_gpu_call(run_img2img_tool, extra_outputs=[None, "", ""]),
             inputs=[
+                dummy_component,
                 input_image,
                 prompt,
                 negative_prompt,
@@ -225,7 +230,7 @@ def create_ui():
         )
 
         clear_btn.click(
-            fn=lambda: (None, "", "", 0.75, 7.0, 20, 512, 512, RESIZE_MODES[0], -1),
+            fn=lambda: (None, "", "", 0.75, 7.0, 20, 512, 512, 0, -1),
             inputs=[],
             outputs=[
                 input_image, prompt, negative_prompt,
